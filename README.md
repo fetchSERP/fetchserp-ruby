@@ -105,6 +105,22 @@ rescue FetchSERP::Error => e
 end
 ```
 
+## Authentication
+
+An API key is required for **all** requests. You can create a free account and grab your key at <https://fetchserp.com/> — every new account starts with **250 free credits** so you can test the endpoints immediately.
+
+Set it in your environment (recommended):
+
+```bash
+export FETCHSERP_API_KEY="your-secret-token"
+```
+
+or pass it directly when instantiating the client:
+
+```ruby
+client = FetchSERP.new(api_key: "your-secret-token")
+```
+
 ## Contributing
 
 Bug reports and pull requests are welcome!
