@@ -1,0 +1,18 @@
+PATH
+  remote: .
+  specs:
+    fetchserp (0.1.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+
+PLATFORMS
+  arm64-darwin-23
+  ruby
+
+DEPENDENCIES
+  fetchserp!
+
+BUNDLED WITH
+   2.6.9
