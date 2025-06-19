@@ -56,6 +56,55 @@ The client will raise `FetchSERP::Error` on any HTTP error (network, 4xx, 5xx) s
 * `/api/v1/web_page_ai_analysis`
 * `/api/v1/web_page_seo_analysis`
 
+## API Reference
+
+Below is the full list of convenience helpers exposed by `FetchSERP::Client`. All methods return a `FetchSERP::Response` object which exposes
+`data`, `body` and the raw Net::HTTP response via `http_response`.
+
+| Ruby method | Underlying REST endpoint | Required params |
+|-------------|-------------------------|-----------------|
+| `backlinks(domain:, **opts)` | `GET /api/v1/backlinks` | `domain` |
+| `domain_emails(domain:, **opts)` | `GET /api/v1/domain_emails` | `domain` |
+| `domain_infos(domain:)` | `GET /api/v1/domain_infos` | `domain` |
+| `keywords_search_volume(keywords:, **opts)` | `GET /api/v1/keywords_search_volume` | `keywords` (Array) |
+| `keywords_suggestions(url: nil, keywords: nil, **opts)` | `GET /api/v1/keywords_suggestions` | one of `url` or `keywords` |
+| `long_tail_keywords_generator(keyword:, **opts)` | `GET /api/v1/long_tail_keywords_generator` | `keyword` |
+| `page_indexation(domain:, keyword:)` | `GET /api/v1/page_indexation` | `domain`, `keyword` |
+| `ranking(keyword:, domain:, **opts)` | `GET /api/v1/ranking` | `keyword`, `domain` |
+| `scrape(url:)` | `GET /api/v1/scrape` | `url` |
+| `scrape_domain(domain:, **opts)` | `GET /api/v1/scrape_domain` | `domain` |
+| `scrape_js(url:, js_script: nil)` | `POST /api/v1/scrape_js` | `url` |
+| `scrape_js_with_proxy(url:, country:, js_script: nil)` | `POST /api/v1/scrape_js_with_proxy` | `url`, `country` |
+| `serp(query:, **opts)` | `GET /api/v1/serp` | `query` |
+| `serp_html(query:, **opts)` | `GET /api/v1/serp_html` | `query` |
+| `serp_js(query:, **opts)` | `GET /api/v1/serp_js` | `query` |
+| `serp_js_content(uuid:)` | `GET /api/v1/serp_js/{uuid}` | `uuid` |
+| `serp_text(query:, **opts)` | `GET /api/v1/serp_text` | `query` |
+| `user` | `GET /api/v1/user` | – |
+| `web_page_ai_analysis(url:, prompt:)` | `GET /api/v1/web_page_ai_analysis` | `url`, `prompt` |
+| `web_page_seo_analysis(url:)` | `GET /api/v1/web_page_seo_analysis` | `url` |
+
+### Example — Get keyword suggestions
+
+```ruby
+client = FetchSERP.new(api_key: ENV["FETCHSERP_API_KEY"])
+
+resp = client.keywords_suggestions(keywords: ["ruby sdk", "seo api"], country: "us")
+puts resp.data["keywords_suggestions"]
+```
+
+### Handling errors
+
+Any 4xx/5xx response raises `FetchSERP::Error` which includes `status` and raw `body` so you can debug:
+
+```ruby
+begin
+  client.serp(query: "ruby openai")
+rescue FetchSERP::Error => e
+  warn "Error #{e.status}: #{e.body}"
+end
+```
+
 ## Contributing
 
 Bug reports and pull requests are welcome!
