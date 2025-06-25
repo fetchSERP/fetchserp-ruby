@@ -79,6 +79,12 @@ module FetchSERP
       get("/api/v1/serp_html", params)
     end
 
+    # SERP AI Overview and AI Mode - returns AI overview and AI mode response for the query
+    # Less reliable than the 2-step process but returns results in under 30 seconds
+    def serp_ai_mode(**params)
+      get("/api/v1/serp_ai_mode", params)
+    end
+
     # Step 1: returns uuid
     def serp_js(**params)
       get("/api/v1/serp_js", params)
