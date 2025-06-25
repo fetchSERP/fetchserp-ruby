@@ -69,6 +69,7 @@ The client will raise `FetchSERP::Error` on any HTTP error (network, 4xx, 5xx) s
 * `/api/v1/scrape_js`
 * `/api/v1/scrape_js_with_proxy`
 * `/api/v1/serp`
+* `/api/v1/serp_ai_mode`
 * `/api/v1/serp_html`
 * `/api/v1/serp_js` & `/api/v1/serp_js/{uuid}`
 * `/api/v1/serp_text`
@@ -96,6 +97,7 @@ Below is the full list of convenience helpers exposed by `FetchSERP::Client`. Al
 | `scrape_js(url:, js_script: nil)` | `POST /api/v1/scrape_js` | `url` |
 | `scrape_js_with_proxy(url:, country:, js_script: nil)` | `POST /api/v1/scrape_js_with_proxy` | `url`, `country` |
 | `serp(query:, **opts)` | `GET /api/v1/serp` | `query` |
+| `serp_ai_mode(query:, **opts)` | `GET /api/v1/serp_ai_mode` | `query` |
 | `serp_html(query:, **opts)` | `GET /api/v1/serp_html` | `query` |
 | `serp_js(query:, **opts)` | `GET /api/v1/serp_js` | `query` |
 | `serp_js_content(uuid:)` | `GET /api/v1/serp_js/{uuid}` | `uuid` |
@@ -111,6 +113,15 @@ client = FetchSERP.new(api_key: ENV["FETCHSERP_API_KEY"])
 
 resp = client.keywords_suggestions(keywords: ["ruby sdk", "seo api"], country: "us")
 puts resp.data["keywords_suggestions"]
+```
+
+### Example — Get SERP AI Overview and AI Mode
+
+```ruby
+client = FetchSERP.new(api_key: ENV["FETCHSERP_API_KEY"])
+
+# Get AI overview and AI mode response for a search query
+resp = client.serp_ai_mode(query: "ruby programming best practices")
 ```
 
 ### Handling errors
